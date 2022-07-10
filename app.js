@@ -34,22 +34,24 @@ app.post("/", function (req, res) {
   const url = "https://us9.api.mailchimp.com/3.0/lists/5466b34f60";
   const options = {
     meathod: "POST",
-    auth: "rohit:2289982aef4e65772f3deaa3fab63012-us9",
+    auth: "rohit:a430b9453f794c58ddf5b28601c9f955-us9",
   };
 
+  
    const request = https.request(url, options, function (response) {
     response.on("data", function (data) {
       console.log(JSON.parse(data));
     });
   });
+  
+  request.write(jsonData);
+  request.end();
+  
 });
-
-request.write(jsondata);
-request.end();
 
 app.listen(3000, function () {
   console.log("Server isListening to port 3000");
 });
 
-// 2289982aef4e65772f3deaa3fab63012-us9
+// a430b9453f794c58ddf5b28601c9f955-us9
 // 5466b34f60
