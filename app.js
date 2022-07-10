@@ -17,29 +17,35 @@ app.post("/", function (req, res) {
   const lastName = req.body.lastname;
   const email = req.body.email;
 
-  var data = {
+  const data = {
     members: [
       {
         email_address: email,
         status: "subscribed",
-        merger_feilds:{
+        merger_feilds: {
           FNAME: firstName,
-          LNAME: lastName
-        }
+          LNAME: lastName,
+        },
       },
     ],
   };
 
   const jsonData = JSON.stringify(data);
-  const  url="https://us9.api.mailchimp.com/3.0/lists/5466b34f60"
-  const option={
-    meathod: POST,
-    auth : "rohit:2289982aef4e65772f3deaa3fab63012-us9"
-  }
-  https.request(url,options,function(response){
-    
-  })
+  const url = "https://us9.api.mailchimp.com/3.0/lists/5466b34f60";
+  const options = {
+    meathod: "POST",
+    auth: "rohit:2289982aef4e65772f3deaa3fab63012-us9",
+  };
+
+   const request = https.request(url, options, function (response) {
+    response.on("data", function (data) {
+      console.log(JSON.parse(data));
+    });
+  });
 });
+
+request.write(jsondata);
+request.end();
 
 app.listen(3000, function () {
   console.log("Server isListening to port 3000");
